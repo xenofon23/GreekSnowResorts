@@ -20,5 +20,8 @@ use Illuminate\Support\Facades\Route;
 
  Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityController::class, 'index']);
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
+Route::get('SnowResorts/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
+Route::get('slopes', [\App\Http\Controllers\SlopesController::class, 'index']);
+
 
 
