@@ -17,11 +17,16 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+Route::post('/register', [\App\Http\Controllers\UserController::class, 'register']);
+Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 
- Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityController::class, 'index']);
-Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
-Route::get('SnowResorts/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
-Route::get('slopes', [\App\Http\Controllers\SlopesController::class, 'index']);
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
+    Route::get('/user', [\App\Http\Controllers\UserController::class, 'user']);
+    Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityController::class, 'index']);
+    Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
+    Route::get('SnowResorts/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
+    Route::get('slopes', [\App\Http\Controllers\SlopesController::class, 'index']);
+});
 
 
