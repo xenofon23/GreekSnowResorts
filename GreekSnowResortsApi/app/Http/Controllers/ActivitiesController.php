@@ -24,7 +24,7 @@ class ActivitiesController extends Controller
     {
         $validatedData = $request->validate([
             'snow_resort_id' => 'required|integer',
-            'type' => 'required|string|max:255',
+            'activity' => 'required|string|max:255',
             'language' => 'required|string|max:50',
         ]);
 
@@ -32,23 +32,7 @@ class ActivitiesController extends Controller
         return response()->json($slope, 201);
     }
 
-    public function Activities(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'resort_id' => 'required|integer',
-            'name' => 'required|string|max:255',
-            'difficulty' => 'nullable|string|max:50',
-            'length_m' => 'required|integer',
-            'altitude_m' => 'nullable|integer',
-            'average_slope_percent' => 'nullable|numeric',
-            'details' => 'nullable|string',
-        ]);
 
-        $slope = Activities::findOrFail($id);
-        $slope->update($validatedData);
-
-        return response()->json($slope);
-    }
 
     public function destroy($id)
     {

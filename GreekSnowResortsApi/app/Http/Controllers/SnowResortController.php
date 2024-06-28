@@ -8,12 +8,18 @@ use Illuminate\Http\Request;
 
 class SnowResortController extends Controller
 {
-    public function index()
+    protected $slopesController;
+    protected $activitiesController;
+
+    public function __construct(SlopesController $slopesController, ActivitiesController $activitiesController)
     {
-        $Slopes= new SlopesController();
-        $Slopes=$Slopes->index()->getData();
-        $activities=new ActivitiesController();
-        $activities=$activities->index()->getData();
+        $this->slopesController = $slopesController;
+        $this->activitiesController = $activitiesController;
+    }
+  public function index()
+    {
+        $slopes = $this->slopesController->index()->getData();
+        $activities = $this->activitiesController->index()->getData();
         $snowResorts = SnowResorts::all();
 
         foreach ( $snowResorts as $resort) {
@@ -33,7 +39,7 @@ class SnowResortController extends Controller
             $resortActivities['en']=$resortActivitiesEn;
             $resortActivities['el']=$resortActivitiesEl;
             $resort['activities']=$resortActivities;
-            foreach ($Slopes as $slope) {
+            foreach ($slopes as $slope) {
                 if ($resort->id ==$slope->snow_resort_id){
                     $resortSlopes[]=$slope;
                 }
@@ -41,7 +47,7 @@ class SnowResortController extends Controller
             $resort['slopes']=$resortSlopes;
 
         }
-        $snowResorts=$this->transformationResortsArray($snowResorts);
+        $snowResorts=$this->transformResortsArray($snowResorts);
 
 
 
@@ -57,27 +63,50 @@ class SnowResortController extends Controller
         ]);
 
         $snowResort = SnowResorts::create($data);
+
         return response()->json($snowResort, 201);
     }
+
     public function show($id)
     {
         $snowResort = SnowResorts::find($id);
 
         if (!$snowResort) {
-            return response()->json(['message' => 'snow resort not found'], 404);
+            return response()->json(['message' => 'Snow resort not found'], 404);
         }
 
         return response()->json($snowResort);
     }
-    public function transformationResortsArray($snowResorts){
-        foreach ( $snowResorts as $resort){
-            $name['el']=$resort->name_el;
-            $name['en']=$resort->name_en;
-            $resort->name=$name;
-            $elevetion['base']=$resort->elevation_base;
-            $elevetion['peak']=$resort->elevation_peak;
-            $resort['elevetion']=$elevetion;
+
+    public function destroy($id)
+    {
+        $snowResort = SnowResorts::find($id);
+
+        if (!$snowResort) {
+            return response()->json(['message' => 'Snow resort not found'], 404);
         }
-        return$snowResorts;
+
+        try {
+            $snowResort->delete();
+
+            return response()->json(['message' => 'Snow resort deleted successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error deleting record'], 500);
+        }
+    }
+
+    protected function transformResortsArray($snowResorts)
+    {
+        return $snowResorts->map(function ($resort) {
+            $resort->name = [
+                'el' => $resort->name_el,
+                'en' => $resort->name_en,
+            ];
+            $resort->elevation = [
+                'base' => $resort->elevation_base,
+                'peak' => $resort->elevation_peak,
+            ];
+            return $resort;
+        });
     }
 }
