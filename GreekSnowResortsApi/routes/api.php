@@ -29,5 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('slopes', [\App\Http\Controllers\SlopesController::class, 'index']);
 });
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
+Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
+
 
 

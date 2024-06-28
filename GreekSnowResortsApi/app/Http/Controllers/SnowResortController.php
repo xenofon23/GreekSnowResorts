@@ -10,9 +10,11 @@ class SnowResortController extends Controller
 {
     protected $slopesController;
     protected $activitiesController;
+    protected $imagesController;
 
-    public function __construct(SlopesController $slopesController, ActivitiesController $activitiesController)
+    public function __construct(SlopesController $slopesController, ActivitiesController $activitiesController,ImagesController $imagesController)
     {
+        $this->imagesController=$imagesController;
         $this->slopesController = $slopesController;
         $this->activitiesController = $activitiesController;
     }
@@ -20,9 +22,11 @@ class SnowResortController extends Controller
     {
         $slopes = $this->slopesController->index()->getData();
         $activities = $this->activitiesController->index()->getData();
+        $images = $this->imagesController->index()->getData();
         $snowResorts = SnowResorts::all();
 
         foreach ( $snowResorts as $resort) {
+            $resortImages=[];
             $resortSlopes=[];
             $resortActivitiesEn=[];
             $resortActivitiesEl=[];
@@ -45,6 +49,12 @@ class SnowResortController extends Controller
                 }
             }
             $resort['slopes']=$resortSlopes;
+            foreach ($images as $image) {
+                if ($resort->id ==$image->snow_resort_id){
+                    $resortImages[]=$image;
+                }
+            }
+            $resort['images']=$resortImages;
 
         }
         $snowResorts=$this->transformResortsArray($snowResorts);
