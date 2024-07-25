@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\BookingConfirmation;
 use App\Models\Bookings;
 use App\Models\Costs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -47,6 +49,8 @@ class BookingController extends Controller
         $booking->user_id = $user->id;
         $booking->order_time = now();
         $booking->save();
+        Mail::to($user->email)->send(new BookingConfirmation($booking));
+
         return response()->json($booking, 201);
 
 

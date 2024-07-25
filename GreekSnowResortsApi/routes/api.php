@@ -21,6 +21,7 @@ Route::post('/register', [\App\Http\Controllers\UserController::class, 'register
 Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+   // Route::middleware(['auth:sanctum','check.token.expiration'])->group(function () {
 
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
     Route::get('/user', [\App\Http\Controllers\UserController::class, 'user']);

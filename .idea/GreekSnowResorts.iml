@@ -5,7 +5,6 @@
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/app" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
-      <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
