@@ -26,3 +26,4 @@ return new class extends Migration
         Schema::rename('bookings', 'bookings_trable');
     }
 };
+//
