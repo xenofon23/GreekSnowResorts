@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use AllowDynamicProperties;
 use App\Helpers\Scraping;
 use App\Models\LiftAvailability;
 use App\Models\SnowResorts;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
-class LiftAvailabilityController extends Controller
+#[AllowDynamicProperties] class LiftAvailabilityController extends Controller
 {
+    public function __construct(SnowResortController $snowResortController)
+    {
+        $this->snowResortController = $snowResortController;
+    }
     public function index($snowResortId)
     {
-        $snowResorts= new SnowResortController();
-$resort=$snowResorts->show($snowResortId);
+        $resort=$this->snowResortController->show($snowResortId);
         if($resort->status() == 404){
             return response()->json(['message' => 'snow resort not found'], 404);
 
