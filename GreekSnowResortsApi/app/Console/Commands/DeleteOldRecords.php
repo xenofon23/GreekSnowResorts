@@ -2,17 +2,18 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class CleanupOldRecordsAtLiftAvailabilityTable extends Command
+class DeleteOldRecords extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:cleanup-old-records-at-lift-availability-table';
+    protected $signature = 'app:delete-old-records';
 
     /**
      * The console command description.
@@ -24,15 +25,18 @@ class CleanupOldRecordsAtLiftAvailabilityTable extends Command
     /**
      * Execute the console command.
      */
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
     public function handle()
     {
-        $threshold = now()->subMinutes(20);
-
-        // Adjust this query to match your table and timestamp column name
+        $tenMinutesAgo = Carbon::now()->subMinutes(10);
         DB::table('lift_availability')
-            ->where('created_at', '<', $threshold)
+            ->where('created_at', '<', $tenMinutesAgo)
             ->delete();
 
-        $this->info('Records older than 20 minutes have been deleted.');
+        $this->info('Old records deleted successfully.');
     }
 }

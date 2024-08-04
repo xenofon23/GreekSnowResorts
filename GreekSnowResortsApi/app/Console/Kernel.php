@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:cleanup-old-records-at-lift-availability-table')->everyMinute();
+        $schedule->command('app:delete-old-records')->everyMinute();
     }
 
     /**
