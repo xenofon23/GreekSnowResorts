@@ -31,8 +31,8 @@ Route::get('slopes', [\App\Http\Controllers\SlopesController::class, 'index']);
 Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityController::class, 'index']);
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
-Route::get('cost/{snowResortId}', [\App\Http\Controllers\CostsController::class, 'getBySnowResortId']);
-Route::get('SnowResort/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
+//Route::get('cost/{snowResortId}', [\App\Http\Controllers\CostsController::class, 'getBySnowResortId']);
+//Route::get('SnowResort/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
 
 
 
