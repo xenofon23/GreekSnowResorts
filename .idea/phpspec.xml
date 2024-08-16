@@ -8,12 +8,6 @@
       <PhpSpecSuiteConfiguration>
         <option name="myPath" value="$PROJECT_DIR$/GreekSnowResortsApi" />
       </PhpSpecSuiteConfiguration>
-      <PhpSpecSuiteConfiguration>
-        <option name="myPath" value="$PROJECT_DIR$/GreekSnowResortsApi" />
-      </PhpSpecSuiteConfiguration>
-      <PhpSpecSuiteConfiguration>
-        <option name="myPath" value="$PROJECT_DIR$/GreekSnowResortsApi" />
-      </PhpSpecSuiteConfiguration>
     </suites>
   </component>
 </project>

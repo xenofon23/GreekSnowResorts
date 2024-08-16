@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 
 class ImagesController extends Controller
@@ -47,4 +48,17 @@ class ImagesController extends Controller
             return response()->json(['error' => 'Image not found'], 404);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

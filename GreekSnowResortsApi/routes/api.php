@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
+// Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
 
 
 

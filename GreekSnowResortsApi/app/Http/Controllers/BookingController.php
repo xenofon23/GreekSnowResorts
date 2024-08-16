@@ -43,7 +43,6 @@ class BookingController extends Controller
             return response()->json(['message' => 'something went wrong'], 400);
 
         }
-
         $booking = new Bookings();
         $booking->snow_resort_id = $request->input('snow_resort_id');
         $booking->user_id = $user->id;

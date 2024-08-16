@@ -4,15 +4,19 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class BookingConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $booking;
+
     /**
      * Create a new message instance.
      */
@@ -36,8 +40,13 @@ class BookingConfirmation extends Mailable
      */
     public function content(): Content
     {
+        $user = Auth::user();
         return new Content(
-            view: 'view.name',
+            view: 'emails.booking_confirmation', // Reference the correct view
+            with: [
+                'booking' => $this->booking,
+                'user' => $user,
+            ],
         );
     }
 
@@ -45,10 +54,8 @@ class BookingConfirmation extends Mailable
      * Get the attachments for the message.
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @throws \Exception
      */
-    public function attachments(): array
-    {
-        return [];
-    }
-}
 
+
+}

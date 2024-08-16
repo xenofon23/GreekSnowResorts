@@ -130,6 +130,7 @@
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/carbonphp/carbon-doctrine-types" />
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/spatie/error-solutions" />
+      <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/coconutcraig/laravel-postmark" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />

@@ -116,6 +116,10 @@ class SnowResortController extends Controller
                 'base' => $resort->elevation_base,
                 'peak' => $resort->elevation_peak,
             ];
+            unset($resort->elevation_base);
+            unset($resort->elevation_peak);
+            unset($resort->name_el);
+            unset($resort->name_en);
             return $resort;
         });
     }
