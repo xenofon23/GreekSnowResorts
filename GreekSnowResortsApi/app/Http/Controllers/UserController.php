@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Dotenv\Exception\ValidationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,8 +37,9 @@ class UserController extends Controller
     /**
      * Login user and create token.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws AuthenticationException
      */
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -47,9 +49,7 @@ class UserController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
+            throw new AuthenticationException('The provided credentials are incorrect.');
         }
 
         $user = Auth::user();
