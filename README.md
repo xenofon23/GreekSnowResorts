@@ -1,4 +1,5 @@
-`# SnowHub API Documentation
+## SnowHub API Documentation
+The following is an api that manages information about the snow resorts of Greece
 
 ## Base URL
 The base URL for accessing the SnowHub API is:https://www.snowhub.gr/api/
