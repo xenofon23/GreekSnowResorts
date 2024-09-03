@@ -160,7 +160,6 @@ Create a new user account.
         "name": "John Doe",
         "email": "user@example.com",
         "password": "yourpassword",
-        "password_confirmation": "yourpassword"
     }'
     ```
     ### 4. User Login
