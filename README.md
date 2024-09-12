@@ -209,7 +209,7 @@ Log out the authenticated user and invalidate the Bearer token.
     curl -X POST https://www.snowhub.gr/api/logout \
     -H "Authorization: Bearer your_generated_token"
     ```
-### 5.Create a Booking
+### 6.Create a Booking
 buy pass from user
 
 - **Endpoint:** `POST /booking`
@@ -262,7 +262,7 @@ buy pass from user
         "number_pass": 2
     }'
     ```
-    ### 6.Get My Bookings
+    ### 7.Get My Bookings
 Retrieve the list of bookings made by the authenticated user.
 
 - **Endpoint:** `GET /mybooking`
@@ -306,7 +306,7 @@ Retrieve the list of bookings made by the authenticated user.
     -H "Authorization: Bearer your_generated_token"
     ```
     
-### 7.Get Authenticated User
+### 8.Get Authenticated User
 Retrieve the details of the authenticated user.
 
 - **Endpoint:** `GET /user`
@@ -332,7 +332,7 @@ Retrieve the details of the authenticated user.
     curl -X GET https://www.snowhub.gr/api/user \
     -H "Authorization: Bearer your_generated_token"
     ```
-### 8.Get All Slopes
+### 9.Get All Slopes
 Retrieve the list of all slopes available across snow resorts.
 
 - **Endpoint:** `GET /slopes`
@@ -375,7 +375,7 @@ Retrieve the list of all slopes available across snow resorts.
     ```bash
     curl -X GET https://www.snowhub.gr/api/slopes
     ```
-    ### Get All Images
+    ###10. Get All Images
 Retrieve the list of all images available across snow resorts.
 
 - **Endpoint:** `GET /images`
@@ -411,7 +411,7 @@ Retrieve the list of all images available across snow resorts.
     curl -X GET https://www.snowhub.gr/api/images
     ```
 
-### 9.Get Snow Resort by ID
+### 11.Get Snow Resort by ID
 Retrieve details of a specific snow resort by its ID.
 
 - **Endpoint:** `GET /SnowResort/{snowResortId}`
