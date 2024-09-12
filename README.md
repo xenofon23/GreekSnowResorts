@@ -134,7 +134,6 @@ Create a new user account.
 - **URL:** `/register`
 - **Headers:**
     - `Content-Type: application/json`
-    - `Authorization: Bearer your_generated_token`
 - **Request Body:**
     ```json
     {  
