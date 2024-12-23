@@ -63,18 +63,21 @@ class isopen extends Command
         $doc->loadHTML($page);
         $selector = new \DOMXPath($doc);
 
-        // Find all list items in the submenu
         $resortNodes = $selector->query('//ul[@class="submenu"]/li/a');
         $i=0;
         foreach ($resortNodes as $node) {
             $url = $node->getAttribute('href');
             $statusNode = $node->getElementsByTagName('font')->item(0);
-            $status = $statusNode->getAttribute('color') === 'red' ? 'Closed' : 'Open';
+            if ($statusNode !== null && $statusNode->getAttribute('color') === 'red') {
+                $status = 'Closed';
+            } else {
+                $status = 'Open';
+            }
             $resorts[] = [
-                'name' =>  basename(parse_url($url, PHP_URL_PATH)),//get the name
+                'name' => basename(parse_url($url, PHP_URL_PATH)), // Get the name
                 'status' => $status,
             ];
-            if($i==21){
+            if ($i == 21) {
                 break;
             }
             $i++;

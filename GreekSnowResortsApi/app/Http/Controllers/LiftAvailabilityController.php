@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use AllowDynamicProperties;
 use App\Helpers\Scraping;
 use App\Models\LiftAvailability;
 use App\Models\SnowResorts;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
-#[AllowDynamicProperties] class LiftAvailabilityController extends Controller
+ class LiftAvailabilityController extends Controller
 {
-    public function __construct(SnowResortController $snowResortController)
+     private SnowResortController $snowResortController;
+
+     public function __construct(SnowResortController $snowResortController)
     {
         $this->snowResortController = $snowResortController;
     }
@@ -35,18 +36,20 @@ use function PHPUnit\Framework\isEmpty;
         return response()->json($liftAvailability);
     }
 
-    public function store( $lifts,$snowResortId)
+    public function store($lifts, $snowResortId)
     {
-        $data=[];
-        foreach ($lifts as $key => $value){
+        $availability = [];
+        foreach ($lifts as $key => $value) {
             $data = [
                 'snow_resort_id' => $snowResortId,
-                'is_open' => $value,
                 'name' => $key,
-                'date'=> date('Y-m-d H:i:s'),
             ];
-            $availability = LiftAvailability::create($data);
-            $data=[];
+            $updateData = [
+                'is_open' => $value,
+                'date' => date('Y-m-d H:i:s'),
+            ];
+            // Use updateOrCreate to insert or update
+            $availability[] = LiftAvailability::updateOrCreate($data, $updateData);
         }
         return response()->json($availability, 201);
     }

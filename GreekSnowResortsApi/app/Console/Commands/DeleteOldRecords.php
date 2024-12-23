@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\LiftAvailability;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -33,10 +34,10 @@ class DeleteOldRecords extends Command
     public function handle()
     {
         $tenMinutesAgo = Carbon::now()->subMinutes(10);
-        DB::table('lift_availability')
-            ->where('created_at', '<', $tenMinutesAgo)
-            ->delete();
+        LiftAvailability::where('created_at', '<', $tenMinutesAgo)
+            ->orWhere('updated_at', '<', $tenMinutesAgo)
+            ->update(['is_open' => null]);
 
-        $this->info('Old records deleted successfully.');
+        $this->info('Old records updated successfully.');
     }
 }
