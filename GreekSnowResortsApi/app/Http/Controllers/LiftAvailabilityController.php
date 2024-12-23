@@ -31,7 +31,12 @@ use function PHPUnit\Framework\isEmpty;
 
             $this->store($lifts['today'],$snowResortId);
         }
+        if($liftAvailability[0]->is_open===null){
+            $scraping=new Scraping();
+            $lifts=$scraping->getSnowReportPage($resortData->name_en);
 
+            $this->store($lifts['today'],$snowResortId);
+        }
         $liftAvailability = LiftAvailability::where('snow_resort_id', $snowResortId)->get();
         return response()->json($liftAvailability);
     }
