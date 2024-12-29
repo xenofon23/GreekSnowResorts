@@ -34,9 +34,7 @@ class DeleteOldRecords extends Command
     public function handle()
     {
         $tenMinutesAgo = Carbon::now()->subMinutes(10);
-        LiftAvailability::where('created_at', '<', $tenMinutesAgo)
-            ->orWhere('updated_at', '<', $tenMinutesAgo)
-            ->update(['is_open' => null]);
+        LiftAvailability::where('updated_at', '<', $tenMinutesAgo)->update(['is_open' => null]);
 
         $this->info('Old records updated successfully.');
     }
