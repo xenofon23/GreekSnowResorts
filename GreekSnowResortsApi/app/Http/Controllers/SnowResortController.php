@@ -26,6 +26,7 @@ class SnowResortController extends Controller
 
         $snowResorts = SnowResorts::all();
         $snowResorts =$this->transformResortsArray($snowResorts);
+
         return response()->json($snowResorts);
     }
 
@@ -102,7 +103,15 @@ class SnowResortController extends Controller
 
     protected function transformResortsArray($snowResorts)
     {
+
         return $snowResorts->map(function ($resort) {
+            $images = $this->imagesController->getThumbnail($resort->id);
+            if($images) {
+                $resort->thumbnail = [
+                    'caption' => $images->caption,
+                    'image_url' => $images->image_url
+                ];
+            }
             $resort->name = [
                 'el' => $resort->name_el,
                 'en' => $resort->name_en,

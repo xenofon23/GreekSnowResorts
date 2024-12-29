@@ -25,6 +25,11 @@ class ImagesController extends Controller
             return response()->json(['error' => 'Image not found'], 404);
         }
     }
+    public function getThumbnail($id)
+    {
+        $image = Images::where("snow_resort_id", $id)->where('caption', 'thumbnail ')->first();
+        return $image;
+    }
 
     public function store(Request $request)
     {
