@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activities;
+use App\Models\LiftAvailability;
 use App\Models\SnowResorts;
 use Illuminate\Http\Request;
 
@@ -11,12 +12,14 @@ class SnowResortController extends Controller
     protected $slopesController;
     protected $activitiesController;
     protected $imagesController;
+    protected $liftAvailabilityController;
 
-    public function __construct(SlopesController $slopesController, ActivitiesController $activitiesController,ImagesController $imagesController)
+    public function __construct(SlopesController $slopesController, ActivitiesController $activitiesController,ImagesController $imagesController, LiftAvailabilityController $liftAvailabilityController )
     {
         $this->imagesController=$imagesController;
         $this->slopesController = $slopesController;
         $this->activitiesController = $activitiesController;
+        $this->liftAvailabilityController = $liftAvailabilityController;
     }
   public function index()
     {
@@ -61,9 +64,7 @@ class SnowResortController extends Controller
         $slopes = $this->slopesController->show($id);
         $activities = $this->activitiesController->show($id);
         $images = $this->imagesController->show($id);
-        $resortActivitiesEn=[];
-        $resortActivitiesEl=[];
-        $resortActivities=[];
+        $liftAvailability=$this->liftAvailabilityController->index($id)->getData();
         foreach ($activities as $activity){
 
             if ($activity->language == 'en') {
@@ -74,6 +75,7 @@ class SnowResortController extends Controller
         }
         $resortActivities['en']=$resortActivitiesEn;
         $resortActivities['el']=$resortActivitiesEl;
+        $resort['lifts']=$liftAvailability;
         $resort['activities']=$resortActivities;
         $resort['slopes']=$slopes;
         $resort['images']=$images;

@@ -13,11 +13,9 @@ use function PHPUnit\Framework\isEmpty;
  class LiftAvailabilityController extends Controller
 {
     use Helpers;
-     private SnowResortController $snowResortController;
 
-     public function __construct(SnowResortController $snowResortController)
+     public function __construct()
     {
-        $this->snowResortController = $snowResortController;
     }
     public function index($snowResortId)
     {
