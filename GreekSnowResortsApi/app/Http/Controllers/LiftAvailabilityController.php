@@ -21,12 +21,11 @@ use function PHPUnit\Framework\isEmpty;
     }
     public function index($snowResortId)
     {
-        $resort=$this->snowResortController->show($snowResortId);
-        if($resort->status() == 404){
+        $resortData = SnowResorts::where('id',$snowResortId)->first();
+        if(!$resortData){
             return response()->json(['message' => 'snow resort not found'], 404);
 
         }
-        $resortData=$resort->getData();
         $admin= $this->admin($snowResortId);
 
 
