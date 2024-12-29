@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LiftAvailabilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,9 @@ Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
     Route::get('/user', [\App\Http\Controllers\UserController::class, 'user']);
-    Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
-    Route::get('mybooking', [\App\Http\Controllers\BookingController::class, 'index']);
+//    Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
+//    Route::get('mybooking', [\App\Http\Controllers\BookingController::class, 'index']);
+
 
 
 });
@@ -33,9 +35,10 @@ Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityContro
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
 
-Route::get('test', [\App\Console\Commands\isopen::class, 'getSnowReportPage']);
+Route::get('test', [\App\Http\Controllers\SnowResortController::class, 'test']);
 
 
+Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
 
 
 

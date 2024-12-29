@@ -19,8 +19,8 @@ class ImagesController extends Controller
     public function show($id)
     {
         try {
-            $image = Images::findOrFail($id);
-            return response()->json($image);
+            $image = Images::where("snow_resort_id", $id)->get();
+            return $image;
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Image not found'], 404);
         }

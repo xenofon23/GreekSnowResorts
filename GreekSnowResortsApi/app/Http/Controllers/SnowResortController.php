@@ -20,48 +20,9 @@ class SnowResortController extends Controller
     }
   public function index()
     {
-        $slopes = $this->slopesController->index()->getData();
-        $activities = $this->activitiesController->index()->getData();
-        $images = $this->imagesController->index()->getData();
+
         $snowResorts = SnowResorts::all();
-
-        foreach ( $snowResorts as $resort) {
-            $resortImages=[];
-            $resortSlopes=[];
-            $resortActivitiesEn=[];
-            $resortActivitiesEl=[];
-            $resortActivities=[];
-            foreach ($activities as $activity){
-                if ($resort->id ==$activity->snow_resort_id) {
-                    if ($activity->language == 'en') {
-                        $resortActivitiesEn[] = $activity;
-                    } else {
-                        $resortActivitiesEl[] = $activity;
-                    }
-                }
-            }
-            $resortActivities['en']=$resortActivitiesEn;
-            $resortActivities['el']=$resortActivitiesEl;
-            $resort['activities']=$resortActivities;
-            foreach ($slopes as $slope) {
-                if ($resort->id ==$slope->snow_resort_id){
-                    $resortSlopes[]=$slope;
-                }
-            }
-            $resort['slopes']=$resortSlopes;
-            foreach ($images as $image) {
-                if ($resort->id ==$image->snow_resort_id){
-                    $resortImages[]=$image;
-                }
-            }
-            $resort['images']=$resortImages;
-
-        }
-        $snowResorts=$this->transformResortsArray($snowResorts);
-
-
-
-
+        $snowResorts =$this->transformResortsArray($snowResorts);
         return response()->json($snowResorts);
     }
 
@@ -79,13 +40,45 @@ class SnowResortController extends Controller
 
     public function show($id)
     {
-        $snowResort = SnowResorts::find($id);
 
-        if (!$snowResort) {
+        $SnowResort = SnowResorts::where('id',$id)->first();
+        if (!$SnowResort) {
             return response()->json(['message' => 'Snow resort not found'], 404);
         }
+        $SnowResort->name = [
+            'el' => $SnowResort->name_el,
+            'en' => $SnowResort->name_en,
+        ];
+        $SnowResort->elevation = [
+            'base' => $SnowResort->elevation_base,
+            'peak' => $SnowResort->elevation_peak,
+        ];
+        unset($SnowResort->elevation_base);
+        unset($SnowResort->elevation_peak);
+        unset($SnowResort->name_el);
+        unset($SnowResort->name_en);
+        $resort[]=$SnowResort;
+        $slopes = $this->slopesController->show($id);
+        $activities = $this->activitiesController->show($id);
+        $images = $this->imagesController->show($id);
+        $resortActivitiesEn=[];
+        $resortActivitiesEl=[];
+        $resortActivities=[];
+        foreach ($activities as $activity){
 
-        return response()->json($snowResort);
+            if ($activity->language == 'en') {
+                $resortActivitiesEn[] = $activity;
+            } else {
+                $resortActivitiesEl[] = $activity;
+            }
+        }
+        $resortActivities['en']=$resortActivitiesEn;
+        $resortActivities['el']=$resortActivitiesEl;
+        $resort['activities']=$resortActivities;
+        $resort['slopes']=$slopes;
+        $resort['images']=$images;
+        return response()->json($resort);
+
     }
 
     public function destroy($id)
@@ -122,5 +115,11 @@ class SnowResortController extends Controller
             unset($resort->name_en);
             return $resort;
         });
+    }
+
+    public function test(request $request)
+    {
+        $file = $request->file('ski_areas');
+        echo 1;
     }
 }

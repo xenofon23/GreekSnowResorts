@@ -14,9 +14,9 @@ class SlopesController extends Controller
         return response()->json($slopes);
     }
 
-        public function show($id)
+        public function show($snowResortId)
     {
-        $slope = Slopes::findOrFail($id);
+        $slope = Slopes::where("snow_resort_id", $snowResortId)->get();
         return response()->json($slope);
     }
 

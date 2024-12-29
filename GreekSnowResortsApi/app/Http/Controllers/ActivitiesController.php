@@ -14,10 +14,10 @@ class ActivitiesController extends Controller
         return response()->json($slopes);
     }
 
-    public function show($id)
+    public function show($snowResortId)
     {
-        $slope = Activities::findOrFail($id);
-        return response()->json($slope);
+        $slope = Activities::where('snow_resort_id', $snowResortId)->get();
+        return $slope;
     }
 
     public function store(Request $request)
