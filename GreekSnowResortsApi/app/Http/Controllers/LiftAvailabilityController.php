@@ -28,7 +28,7 @@ use function PHPUnit\Framework\isEmpty;
 
 
         $liftAvailability = LiftAvailability::where('snow_resort_id', $snowResortId)->get();
-        if($liftAvailability->isEmpty()){
+        if(!$liftAvailability){
             $scraping=new Scraping();
             $lifts=$scraping->getSnowReportPage($resortData->name_en);
 
