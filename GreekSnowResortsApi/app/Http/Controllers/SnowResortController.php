@@ -61,8 +61,8 @@ class SnowResortController extends Controller
         unset($SnowResort->elevation_peak);
         unset($SnowResort->name_el);
         unset($SnowResort->name_en);
-        $resort[]=$SnowResort;
-        $slopes = $this->slopesController->show($id);
+        $resort['info']=$SnowResort;
+        $slopes = $this->slopesController->show($id)->getData();
         $activities = $this->activitiesController->show($id);
         $images = $this->imagesController->show($id);
         $liftAvailability=$this->liftAvailabilityController->index($id)->getData();
