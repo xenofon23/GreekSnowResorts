@@ -25,6 +25,7 @@ class SnowResortController extends Controller
     {
 
         $snowResorts = SnowResorts::all();
+
         $snowResorts =$this->transformResortsArray($snowResorts);
 
         return response()->json($snowResorts);
@@ -46,6 +47,9 @@ class SnowResortController extends Controller
     {
 
         $SnowResort = SnowResorts::where('id',$id)->first();
+        $snowReports = $SnowResort->snowReports->first();
+
+        $activityIds=$SnowResort->activities;
         if (!$SnowResort) {
             return response()->json(['message' => 'Snow resort not found'], 404);
         }
@@ -61,14 +65,17 @@ class SnowResortController extends Controller
         unset($SnowResort->elevation_peak);
         unset($SnowResort->name_el);
         unset($SnowResort->name_en);
+        unset($SnowResort->activities);
+        unset($SnowResort->snowReports);
         $resort['info']=$SnowResort;
+        $resort['info']['snow_reports']=$snowReports;
         $slopes = $this->slopesController->show($id)->getData();
-        $activities = $this->activitiesController->show($id);
         $images = $this->imagesController->show($id);
         $liftAvailability=$this->liftAvailabilityController->index($id)->getData();
+        $activities=Activities::whereIn('id', $activityIds['activities'])->get()->toArray();
         foreach ($activities as $activity){
 
-            if ($activity->language == 'en') {
+            if ($activity['language'] == 'en') {
                 $resortActivitiesEn[] = $activity;
             } else {
                 $resortActivitiesEl[] = $activity;
@@ -106,6 +113,7 @@ class SnowResortController extends Controller
 
         return $snowResorts->map(function ($resort) {
             $images = $this->imagesController->getThumbnail($resort->id);
+
             if($images) {
                 $resort->thumbnail = [
                     'caption' => $images->caption,
@@ -120,10 +128,12 @@ class SnowResortController extends Controller
                 'base' => $resort->elevation_base,
                 'peak' => $resort->elevation_peak,
             ];
+
             unset($resort->elevation_base);
             unset($resort->elevation_peak);
             unset($resort->name_el);
             unset($resort->name_en);
+            unset($resort->activities);
             return $resort;
         });
     }

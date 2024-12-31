@@ -35,7 +35,7 @@ Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityContro
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
 
-Route::get('test', [\App\Http\Controllers\SnowResortController::class, 'test']);
+//Route::get('test', [\App\Console\Commands\RunUpdateSnowReportTask::class, 'handle']);
 
 
 Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);

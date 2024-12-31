@@ -8,12 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class SnowResorts extends Model
 {
     use HasFactory;
-    protected $hidden = ['admin'];
-
+    protected $hidden = ['admin','created_at',
+        'updated_at'];
+    protected $casts = [
+        'activities' => 'array',
+    ];
     protected $fillable = ['name', 'description'];
 
     public function getAdmin()
     {
         return $this->attributes['admin'];
+    }
+    public function snowReports()
+    {
+        return $this->hasMany(SnowReport::class, 'snow_resort_id');
     }
 }

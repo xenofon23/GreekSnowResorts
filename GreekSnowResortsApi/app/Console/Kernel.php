@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:delete-old-records')->everyMinute();
         $schedule->command('app:isopen')->everyTenMinutes();
+        $schedule->command('app:run-update-snow-report-task')->hourly() ;
 
     }
 
