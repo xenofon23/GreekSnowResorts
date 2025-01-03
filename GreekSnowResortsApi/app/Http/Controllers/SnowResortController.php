@@ -141,6 +141,40 @@ class SnowResortController extends Controller
     public function test(request $request)
     {
         $file = $request->file('ski_areas');
-        echo 1;
+        $jsonContents = file_get_contents($file->getPathname());
+        $lifts = json_decode($jsonContents, true);
+        $resorts=[];
+        foreach ($lifts as $lift) {
+            if (isset($lift['properties']['skiAreas'][0]['properties']['name'])) {
+                $targetResortName = $lift['properties']['skiAreas'][0]['properties']['name'];
+
+                if (!isset($resorts[$targetResortName])) {
+                    $resorts[$targetResortName] = ['lifts' => []];
+                }
+
+                $liftName = $lift['properties']['name'] ?? 'Unknown Lift';
+                $coordinates = $lift['geometry']['coordinates'] ?? null;
+                if($lift['properties']['liftType']=="platter"){
+                    $resorts[$targetResortName]['lifts'][$liftName]['occupancy']=1;
+
+                }else if($lift['properties']['liftType']==="t-bar")
+                {
+                    $resorts[$targetResortName]['lifts'][$liftName]['occupancy']=1;
+                }
+                else{
+                    $resorts[$targetResortName]['lifts'][$liftName]['occupancy']=$lift['properties']['occupancy'];
+
+                }
+                $resorts[$targetResortName]['lifts'][$liftName]['liftType']=$lift['properties']['liftType'];
+                $resorts[$targetResortName]['lifts'][$liftName]['duration']=$lift['properties']['duration'];
+
+                $resorts[$targetResortName]['lifts'][$liftName]['capacity']=$lift['properties']['capacity'];
+                if ($coordinates !== null) {
+                    $resorts[$targetResortName]['lifts'][$liftName]['coordinates'] = $coordinates;
+                }
+            }
+        }
+        return response()->json($resorts);
+
     }
 }
