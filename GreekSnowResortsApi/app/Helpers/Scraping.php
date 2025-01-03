@@ -73,6 +73,12 @@ class Scraping
             $liftname = str_replace("\n", "", $liftname);
             $lifts[$liftname] = 1; // Store lift name with status 'green'
         }
+        $orangeLifts = $newSelector->query('//span[@class="lift-name orange"]');
+        foreach ($orangeLifts as $element) {
+            $liftname = $element->textContent;
+            $liftname = str_replace("\n", "", $liftname);
+            $lifts[$liftname] = 0; // Store lift name with status 'red'
+        }
 
         return $lifts;
     }
