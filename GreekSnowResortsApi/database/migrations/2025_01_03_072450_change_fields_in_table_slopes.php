@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreign('snow_resort_id')->references('id')->on('snow_resorts')->onDelete('cascade');
             $table->string('difficulty')->nullable()->change();
 
-
-
         });
     }
 

@@ -24,8 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [\App\Http\Controllers\UserController::class, 'user']);
 //    Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
 //    Route::get('mybooking', [\App\Http\Controllers\BookingController::class, 'index']);
-
-
+    Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
+    Route::get('lifts/{snowResortId}', [LiftAvailabilityController::class, 'getBySnowResortId']);
 
 });
 Route::get('cost/{snowResortId}', [\App\Http\Controllers\CostsController::class, 'getBySnowResortId']);
@@ -38,7 +38,7 @@ Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
 Route::post('test', [\App\Http\Controllers\SnowResortController::class, 'test']);
 
 
-Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
+//Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
 
 
 

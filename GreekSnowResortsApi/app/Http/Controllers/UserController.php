@@ -21,14 +21,20 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|',
             'password' => 'required|string|min:8',
+            'snow_resort_id' => 'required|exists:snow_resorts,id'
         ]);
-
+        $existingUser = User::where('snow_resort_id', $request->snow_resort_id)->first();
+        if ($existingUser) {
+            return response()->json(['message' => 'User already exists with this snow resort ID'], 400);
+        }
         $user = User::create([
+            'id' => $request->snow_resort_id,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'snow_resort_id' => $request->snow_resort_id,
         ]);
 
         return response()->json(['message' => 'User registered successfully'], 201);
@@ -54,8 +60,17 @@ class UserController extends Controller
 
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
+        $expirationMinutes = config('sanctum.expiration');
+        $expiresAt = now()->addMinutes($expirationMinutes);
+        $user->tokens->last()->forceFill([
+            'expires_at' => $expiresAt,
+        ])->save();
+        $user->makeHidden('tokens');
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+        ], 200);
     }
 
     /**

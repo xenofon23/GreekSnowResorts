@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof AuthenticationException) {
             return response()->json([
-                'error' => 'The provided credentials are incorrect.'
+                'error' => 'Unauthenticated'
             ], 401); // 401 Unauthorized status code
         }
 
