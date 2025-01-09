@@ -35,7 +35,7 @@ Route::get('lifts/{snowResortId}', [\App\Http\Controllers\LiftAvailabilityContro
 Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'index']);
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
 
-Route::post('test', [\App\Http\Controllers\SnowResortController::class, 'test']);
+Route::get('Stream/{file}', [\App\Http\Controllers\ProxyController::class, 'proxyStream']);
 
 
 //Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
