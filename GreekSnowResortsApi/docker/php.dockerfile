@@ -6,7 +6,7 @@ ARG GID
 ENV UID=${UID}
 ENV GID=${GID}
 
-# Install necessary dependencies for building extensions
+# Install necessary dependencies for building extensions and Chromium
 RUN apk add --no-cache \
     autoconf \
     build-base \
@@ -20,7 +20,14 @@ RUN apk add --no-cache \
     oniguruma-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    chromium \
+    chromium-chromedriver \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ttf-freefont
 
 # Create application directory
 RUN mkdir -p /var/www/html
@@ -49,6 +56,10 @@ RUN docker-php-ext-install pdo pdo_mysql \
 # Install and enable Xdebug
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
+
+# Add Chromium to PATH
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_DRIVER=/usr/bin/chromedriver
 
 # Set container user to Laravel
 USER laravel

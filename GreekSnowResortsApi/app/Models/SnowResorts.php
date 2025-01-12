@@ -23,4 +23,8 @@ class SnowResorts extends Model
     {
         return $this->hasMany(SnowReport::class, 'snow_resort_id');
     }
+    public function Posts()
+    {
+        return $this->hasMany(Post::class, 'snow_resort_id');
+    }
 }

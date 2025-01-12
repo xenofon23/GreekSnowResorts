@@ -47,12 +47,12 @@ class SnowResortController extends Controller
     {
 
         $SnowResort = SnowResorts::where('id',$id)->first();
-        $snowReports = $SnowResort->snowReports->first();
-
-        $activityIds=$SnowResort->activities;
         if (!$SnowResort) {
             return response()->json(['message' => 'Snow resort not found'], 404);
         }
+        $snowReports = $SnowResort->snowReports->first();
+        $SnowResort->Posts;
+        $activityIds=$SnowResort->activities;
         $SnowResort->name = [
             'el' => $SnowResort->name_el,
             'en' => $SnowResort->name_en,
