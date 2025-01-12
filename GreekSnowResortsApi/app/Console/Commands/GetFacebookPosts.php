@@ -43,11 +43,8 @@ class GetFacebookPosts extends Command
             ->toArray();
 
         $browserFactory = new BrowserFactory('chromium');
-        $browserFactory->setOptions([
-            'args' => ['--no-sandbox']
-        ]);
         $posts=[];
-        $browser = $browserFactory->createBrowser();
+        $browser = $browserFactory->createBrowser([ 'noSandbox' => true]);
         foreach ($snowResortData as $item) {
             $facebookName = $item['facebook_name'];
             $page = $browser->createPage();
