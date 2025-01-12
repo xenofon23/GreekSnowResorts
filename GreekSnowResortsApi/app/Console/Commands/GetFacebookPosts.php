@@ -42,7 +42,7 @@ class GetFacebookPosts extends Command
             ->values()
             ->toArray();
 
-        $browserFactory = new BrowserFactory('chromium');
+        $browserFactory = new BrowserFactory('chromium-browser');
         $posts=[];
         $browser = $browserFactory->createBrowser([ 'noSandbox' => true]);
         foreach ($snowResortData as $item) {
