@@ -54,7 +54,7 @@ class GetFacebookPosts extends Command
             $postContent  = $page->evaluate("
             (() => {
                 const post = document.querySelector('[data-ad-preview=\"message\"]');
-                return post ? post.innerText : 'No posts found';
+                return post ? post.innerText : null;
             })()
             ")->getReturnValue();
             $postIdentifier = md5($postContent);
@@ -73,6 +73,10 @@ class GetFacebookPosts extends Command
     {
         foreach ($posts as $post)
         {
+            if($post['content']==null)
+            {
+                continue;
+            }
             $existingPost=Post::where('post_identifier', $post['post_identifier'])->first();
             if (!$existingPost) {
                 Post::create($post);
