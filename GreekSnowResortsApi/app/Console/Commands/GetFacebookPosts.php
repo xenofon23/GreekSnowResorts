@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Console\Commands;
-
+use App\Models\Post;
+use App\Models\SnowResorts;
+use HeadlessChromium\BrowserFactory;
 use Illuminate\Console\Command;
+use Illuminate\Console\Scheduling\Schedule;
 
 class GetFacebookPosts extends Command
 {
@@ -25,32 +28,56 @@ class GetFacebookPosts extends Command
      */
     public function handle()
     {
-       $test= $this->getFacebookPage();
-       echo 1;
+        $snowResortData = SnowResorts::select('id', 'facebook_name')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'facebook_name' => $item->facebook_name,
+                ];
+            })
+            ->filter(function ($item) {
+                return !is_null($item['facebook_name']);
+            })
+            ->values()
+            ->toArray();
+
+        $browserFactory = new BrowserFactory('chromium-browser');
+        $posts=[];
+        $browser = $browserFactory->createBrowser();
+        foreach ($snowResortData as $item) {
+            $facebookName = $item['facebook_name'];
+            $page = $browser->createPage();
+
+            $page->navigate("https://www.facebook.com/$facebookName")->waitForNavigation();
+
+            $postContent  = $page->evaluate("
+            (() => {
+                const post = document.querySelector('[data-ad-preview=\"message\"]');
+                return post ? post.innerText : 'No posts found';
+            })()
+            ")->getReturnValue();
+            $postIdentifier = md5($postContent);
+            $posts[] = [
+                "content" => $postContent,
+                "snow_resort_id" => $item['id'],
+                "post_identifier" => $postIdentifier,
+            ];
+            $page->close();
+
+        }
+        $this->savePosts($posts);
     }
-    public function getFacebookPage(): string|bool
+
+    public function savePosts($posts)
     {
-        $name='ElatochoriSki';
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://www.facebook.com/$name",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        return $response;
-
+        foreach ($posts as $post)
+        {
+            $existingPost=Post::where('post_identifier', $post['post_identifier'])->first();
+            if (!$existingPost) {
+                Post::create($post);
+            }
+        }
     }
+
 }
