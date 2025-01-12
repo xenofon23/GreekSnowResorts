@@ -36,7 +36,7 @@ Route::get('SnowResorts', [\App\Http\Controllers\SnowResortController::class, 'i
 Route::get('images', [\App\Http\Controllers\ImagesController::class, 'index']);
 
 Route::get('Stream/{file}', [\App\Http\Controllers\ProxyController::class, 'proxyStream']);
-Route::get('test', [\App\Console\Commands\GetFacebookPosts::class, 'handle']);
+//Route::get('test', [\App\Console\Commands\GetFacebookPosts::class, 'handle']);
 
 
 //Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
