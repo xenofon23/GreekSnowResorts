@@ -44,7 +44,7 @@ class GetFacebookPosts extends Command
 
         $browserFactory = new BrowserFactory('chromium');
         $browserFactory->setOptions([
-            'no-sandbox' => true,
+            'args' => ['--no-sandbox']
         ]);
         $posts=[];
         $browser = $browserFactory->createBrowser();
