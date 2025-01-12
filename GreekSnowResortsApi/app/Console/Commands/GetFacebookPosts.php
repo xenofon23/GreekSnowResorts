@@ -43,9 +43,6 @@ class GetFacebookPosts extends Command
             ->toArray();
 
         $browserFactory = new BrowserFactory('chromium-browser');
-        $browserFactory->setOptions([
-            'args' => ['--no-sandbox'] // Disable sandboxing when running as root
-        ]);
         $posts=[];
         $browser = $browserFactory->createBrowser();
         foreach ($snowResortData as $item) {
