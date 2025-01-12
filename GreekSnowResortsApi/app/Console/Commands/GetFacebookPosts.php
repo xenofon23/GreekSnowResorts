@@ -46,6 +46,7 @@ class GetFacebookPosts extends Command
         $posts=[];
         $browser = $browserFactory->createBrowser([ 'noSandbox' => true]);
         foreach ($snowResortData as $item) {
+            echo 'test';
             $facebookName = $item['facebook_name'];
             $page = $browser->createPage();
 
@@ -57,6 +58,7 @@ class GetFacebookPosts extends Command
                 return post ? post.innerText : null;
             })()
             ")->getReturnValue();
+            echo $postContent;
             $postIdentifier = md5($postContent);
             $posts[] = [
                 "content" => $postContent,
