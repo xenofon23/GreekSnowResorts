@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:isopen')->everyTenMinutes();
         $schedule->command('app:run-update-snow-report-task')->hourly() ;
         $schedule->command('sanctum:prune-expired --hours=24')->daily();
-        $schedule->command('app:get-facebook-posts')->everyTwoMinutes();
+//        $schedule->command('app:get-facebook-posts')->everyTwoMinutes();
 
     }
 
