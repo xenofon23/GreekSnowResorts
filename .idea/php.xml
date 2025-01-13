@@ -131,6 +131,10 @@
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/carbonphp/carbon-doctrine-types" />
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/spatie/error-solutions" />
       <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/coconutcraig/laravel-postmark" />
+      <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/chrome-php/wrench" />
+      <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/chrome-php/chrome" />
+      <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/GreekSnowResortsApi/vendor/evenement/evenement" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

@@ -8,7 +8,6 @@
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/app" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
-      <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/tests/Unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/brick/math" />
@@ -125,6 +124,10 @@
       <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/spatie/error-solutions" />
       <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/coconutcraig/laravel-postmark" />
+      <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/chrome-php/chrome" />
+      <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/chrome-php/wrench" />
+      <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/evenement/evenement" />
+      <excludeFolder url="file://$MODULE_DIR$/GreekSnowResortsApi/vendor/symfony/filesystem" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
