@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 use App\Models\Post;
 use App\Models\SnowResorts;
 use HeadlessChromium\BrowserFactory;
+use HeadlessChromium\Page;
 use Illuminate\Console\Command;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\DB;
 
 class GetFacebookPosts extends Command
 {
@@ -42,10 +44,13 @@ class GetFacebookPosts extends Command
             ->values()
             ->toArray();
 
-        $browserFactory = new BrowserFactory('chromium');
         $posts=[];
-        $browser = $browserFactory->createBrowser([ 'noSandbox' => true]);
+
         foreach ($snowResortData as $item) {
+            $browserFactory = new BrowserFactory('chromium-browser');
+
+            $browser = $browserFactory->createBrowser([ 'noSandbox' => true]);
+
             $facebookName = $item['facebook_name'];
             $page = $browser->createPage();
 
@@ -58,33 +63,27 @@ class GetFacebookPosts extends Command
             })()
             ")->getReturnValue();
             $postIdentifier = md5($postContent);
-            $posts[] = [
+            $posts= [
                 "content" => $postContent,
                 "snow_resort_id" => $item['id'],
                 "post_identifier" => $postIdentifier,
             ];
             echo $postContent;
             $page->close();
+            $this->savePosts($posts);
 
         }
-        $this->savePosts($posts);
     }
 
     public function savePosts($posts)
     {
-        $i=0;
-        foreach ($posts as $post)
-        {
-            echo $i++;
-            if($post['content']==null)
+
+            if($posts['content']!==null)
             {
-                continue;
+                Post::create($posts);
             }
-            $existingPost=Post::where('post_identifier', $post['post_identifier'])->first();
-            if (!$existingPost) {
-                Post::create($post);
-            }
-        }
+
+
     }
 
 }

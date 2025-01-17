@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,14 +13,11 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function store(Request $request)
+    public function store($post)
     {
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'snow_resort_id' => 'required|exists:snow_resorts,id',
-        ]);
 
-        $post = Post::create($validated);
+
+        $post = Post::create($post);
 
         return response()->json($post, 201);
     }

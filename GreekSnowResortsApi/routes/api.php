@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
 //    Route::get('mybooking', [\App\Http\Controllers\BookingController::class, 'index']);
     Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
     Route::get('lifts/{snowResortId}', [LiftAvailabilityController::class, 'getBySnowResortId']);
-
 });
 Route::get('cost/{snowResortId}', [\App\Http\Controllers\CostsController::class, 'getBySnowResortId']);
 Route::get('SnowResort/{snowResortId}', [\App\Http\Controllers\SnowResortController::class, 'show']);
@@ -39,7 +38,6 @@ Route::get('Stream/{file}', [\App\Http\Controllers\ProxyController::class, 'prox
 Route::get('test', [\App\Console\Commands\GetFacebookPosts::class, 'handle']);
 
 
-//Route::put('/lift-availability', [LiftAvailabilityController::class, 'update']);
 
 
 
